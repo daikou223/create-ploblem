@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" charset="UTF-8">
+        <link rel = "stylesheet" href = "main.css">
+		<script type="text/javascript" async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+			</script>
+		<style>
+			*:not(.problem){
+				font-size:12px;
+			}
+			h1{
+				text-align:center;
+				font-size:18px;
+			}
+			@media print{
+				.scr{
+					display:none;
+			}
+			}
+		</style>
+		</head>
+	        <body>
+	<script type="text/javascript"href = "main.js">
+		function print(){
+			window.print();
+		}
+		function isAlphabet(char) {
+			return /^[A-Za-z^+-÷()_=]$/.test(char);
+		}
+		function createproblem(){
+			var num_problems = document.getElementById("problems").value;
+			max_num = document.getElementById("maxnum");
+			max_num.textContent = num_problems
+			var type_problems = document.getElementById("problem-type").value;
+			console.log(num_problems)
+			console.log(type_problems)
+			var plob = [];
+			var result = document.getElementsByClassName("problem")[0];
+			result.innerHTML = "";
+			for(var i = 1;i<=num_problems;i++){
+				flag = 0
+			result.innerHTML += "(" + i + ")\\(";
+			for(var j = 0;j<type_problems.length;j++){
+				if(type_problems[j] === "*"){
+					if(flag===0){
+						result.innerHTML += Math.floor(Math.random()*9)+1;
+						flag = 1
+					}
+					else{
+					result.innerHTML += Math.floor(Math.random()*10);
+					}
+				}
+				else if(type_problems[j] === "\\"){
+					result.innerHTML += "\\";
+					flag = 0
+						 }
+				else if(isAlphabet(type_problems[j])){
+				result.innerHTML += type_problems[j];
+					flag = 0
+						 }
+				else{
+					result.innerHTML += "\\)"+type_problems[j] + "\\(";
+				}
+			}
+			console.log(result.innerHTML);
+			result.innerHTML += "\\)<br><br>";
+		}
+			MathJax.Hub.Typeset(result)
+		}
+		</script>
+				<div class = "scr">
+			<h1>問題作成システム</h1>
+			問題数 <input type = "text" id = "problems"width = "10"/><br>
+			問題形式 <input type = "text" id = "problem-type"width = "10"/><br>
+					<button onclick = "createproblem()">問題を作成</button>
+					<button onclisk = "print()">印刷</button></div>	
+				<h1>問題プリント</h1>
+				<div class = "pri">
+					<table>
+						<tr><th width = "500">氏名:</th><th width = "200">得点</th><th>/<a id = "maxnum"></a></th></tr></table>
+				</div>
+            <div class = "problem">
+            </div>
+	</body>
+</html>
